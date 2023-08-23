@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org">
+    <head>
+        <title>Tiquete</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <section th:fragment="agregarTiquete">
+            <div aria-hidden="true">
+                <form th:action="@{/pruebas/guardarTiquete}" th:object="${tiquetes}" method="POST" class="was-validated" enctype="multipart/form-data">
+                    <div>
+                        <input type="hidden" name="cliente.idUsuario" th:value="${cliente.idUsuario}"/>
+                        <div>
+                            <label for="titulo">[[#{tiquete.titulo}]]</label>
+                            <input type="text" name="titulo" required="true"/>
+                        </div>
+                        <div>
+                            <label for="descripcion">[[#{tiquete.descripcion}]]</label>
+                            <input type="text" name="descripcion" required="false"/>
+                        </div>
+                        <div>
+                            <label for="estado">[[#{tiquete.estado}]]</label>
+                            <input type="text" name="estado" required="true"/>
+                        </div>
+                        <div>
+                            <label for="idUsuario">[[#{tiquete.ingeniero}]]</label>
+                            <select name="usuario.idUsuario" class="form-select" required="true">
+                                <option th:each="u : ${usuarios}" th:value="${u.idUsuario}" th:text="${u.nombre}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <button>Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>

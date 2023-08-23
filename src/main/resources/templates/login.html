@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{layout/plantilla :: head}"></head>
+    <body class="credenciales">
+        <section class="form_credenciales">
+            <img th:src="@{/images/logo-sample.png}" alt="Company logo"></img>
+            <h1>[[#{accion.login}]]</h1>
+            <form method="post" th:action="@{/login}">
+                <div class="usuario_data">
+                    <i class='bx bxs-user'></i>
+                    <input type="text" name="username" id="username" required>
+                    <span></span>
+                    <label for="username">[[#{usuario.username}]]</label>
+                </div>
+                <div class="usuario_data">
+                    <i class='bx bxs-key'></i>
+                    <input type="password" name="password" id="password" required for="password">
+                    <span></span>
+                    <label for="password">[[#{usuario.password}]]</label>
+                </div>
+                <div th:if="${param.error != null}" class="login_error">
+                    <h3>[[#{error.login}]]</h3>
+                </div>
+                <input type="submit" value="Login">
+                <div class="registro">[[#{login.ingreso}]]<a th:href="@{/registro/nuevo}">[[#{registro.acceso}]]</a></div>
+            </form>
+        </section>
+    </body>
+</html>

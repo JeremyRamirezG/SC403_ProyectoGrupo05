@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org">
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+        <script th:src="@{/js/notificaciones.js}"></script>
+        <title>Testing</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <div>
+            <ul> 
+                <li><a th:href="@{/index}">Main Page</a></li>
+                <li><a th:href="@{/pruebas/listado}">[[#{pruebas.listado}]]</a></li>
+                <li><a th:href="@{/pruebas/listado/tiquete/}+${tiquete.idTiquete}">Volver al tiquete</a></li>
+            </ul> 
+        </div>
+        <div>
+            <h1>[[${tiquete.titulo}]]</h1>
+            <div>Subject: [[${subject}]]</div>
+            <div>Destinatario: [[${destinatario.username}]]</div>
+        </div>
+        <section th:fragment="agregarUsuario">
+            <div aria-hidden="true">
+                <form th:action="@{/pruebas/enviarCorreo/}+${tiquete.idTiquete}+@{/enviar}" method="POST">
+                    <div>
+                        <label for="contenido">[[#{correo.contenido}]]</label>
+                        <input type="text" name="contenido" required="true"/>
+                    </div>
+                    <div>
+                        <button onclick="sendPrivateMessage();">Enviar</button>
+                        <input type="hidden" id="privateText" th:value="@{Se ha recibido enviado un correo en el tiquete con el id '}+${tiquete.idTiquete}+@{', por favor revise su bandeja de entrada}"/>
+                        <input type="hidden" id="to" th:field="${destinatario.username}"/>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>

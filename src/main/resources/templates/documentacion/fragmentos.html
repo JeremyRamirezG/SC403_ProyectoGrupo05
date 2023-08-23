@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{layout/plantilla :: head}"></head>
+    <body>
+        <section th:fragment="titulo">
+            <div class="titulo_container">
+                <h1>[[#{documentacion.listado}]]</h1>
+                <ul>
+                  <li><a sec:authorize="hasRole('ROLE_ADM')" href="#modal_crear">[[#{documentacion.crear}]]</a></li>
+                </ul>
+            </div>  
+        </section>
+        <section th:fragment="listado_documentacion">
+            <div class="container_tabla">
+                <table class="tabla_documentacion">
+                    <thead>
+                        <tr>
+                            <th>[[#{documentacion.listado}]]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div th:if="${documentacion != null and !documentacion.empty}">
+                          <tr th:each="documento, contador : ${documentacion}">
+                              <td>
+                                  <b>[[${documento.titulo}]] | [[${documento.idDocumento}]]
+                                      <a th:href="@{/documentacion/verDocumento/}+${documento.idDocumento}"><i class='bx bxs-plus-square'></i></a>
+                                      <a sec:authorize="hasRole('ROLE_ADM')" th:href="@{/documentacion/eliminarDocumento/}+${documento.idDocumento}"><i class='bx bxs-x-square'></i></a>
+                                  </b>
+                                  <p>[[${documento.descripcion}]]</p>
+                              </td>
+                          </tr>
+                        </div>
+                        <div th:if="${documentacion == null or documentacion.empty}">
+                          <tr><td><i>[[#{documentacion.vacio}]]</i></td></tr>
+                        </div>
+                    </tbody>
+                </table>
+            </div> 
+        </section>
+        <section th:fragment="documento">
+            <div class="titulo_tiquete_container">
+              <h1>[[${documentacion.titulo}]]</h1>
+              <a th:href="@{/documentacion/listado}">[[#{tiquete.volver}]]</a>
+              <a sec:authorize="hasRole('ROLE_ADM')" href="#modal_modificar">[[#{tiquete.modificar}]]</a>
+              <div class="descripcion_container">
+                <h2>[[#{documentacion.contenido}]]</h2>
+                <p>[[${documentacion.contenido}]]</p>
+              </div>
+              <div class="info_container">
+                <h2>[[#{documentacion.descripcion}]]</h2>
+                <p>[[${documentacion.descripcion}]]</p>
+              </div>
+            </div>
+        </section>
+        <section th:fragment="crear_documentacion">
+            <div id="modal_crear" class="modal_form">
+            <div>
+              <a href="#close" title="Close" class="close">X</a>
+              <h2>[[#{documentacion.crear}]]</h2>
+              <form th:action="@{/documentacion/agregarDocumento}" th:object="${documentacion}"method="POST">
+                    <div>
+                        <div>
+                            <label for="titulo">[[#{documentacion.titulo}]]</label>
+                            <input type="text" name="titulo" required="true"/>
+                        </div>
+                        <div>
+                            <label for="descripcion">[[#{documentacion.descripcion}]]</label>
+                            <input type="text" name="descripcion" required="false"/>
+                        </div>
+                        <div>
+                            <label for="contenido">[[#{documentacion.contenido}]]</label>
+                            <textarea type="text" name="contenido" required="true"></textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <button onClick="showNotificacion();">[[#{accion.guardar}]]</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </section>
+        <section th:fragment="modificar_documentacion">
+          <div id="modal_modificar" class="modal_form">
+            <div>
+              <a href="#close" title="Close" class="close">X</a>
+              <h2>[[#{documentacion.modificar}]]</h2>
+              <form th:action="@{/documentacion/agregarDocumento}" th:object="${documentacion}"method="POST">
+                    <input type="hidden" name="idDocumento" th:field="*{idDocumento}"/>
+                    <div>
+                        <div>
+                            <label for="titulo">[[#{documentacion.titulo}]]</label>
+                            <input type="text" name="titulo" required="true" th:field="*{titulo}"/>
+                        </div>
+                        <div>
+                            <label for="descripcion">[[#{documentacion.descripcion}]]</label>
+                            <input type="text" name="descripcion" required="false" th:field="*{descripcion}"/>
+                        </div>
+                        <div>
+                            <label for="contenido">[[#{documentacion.contenido}]]</label>
+                            <textarea type="text" name="contenido" required="true" th:field="*{contenido}"></textarea>
+                        </div>
+                    </div>
+                    <div>
+                        <button onClick="showNotificacion();">[[#{accion.guardar}]]</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </section>  
+    </body>
+</html>

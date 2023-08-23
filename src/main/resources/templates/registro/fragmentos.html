@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{layout/plantilla :: head}"></head>
+    <body>
+        <section class="form_credenciales" th:fragment="registroUsuario">
+            <img th:src="@{/images/logo-sample.png}" alt="Company logo"></img>
+            <h1>[[#{accion.registrar}]]</h1>
+            <form th:action="@{/registro/crearUsuario}" th:object="${usuarios}"method="POST">
+                <div class="usuario_data">
+                    <i class='bx bxs-user-detail'></i>
+                    <input type="text" name="nombre" required>
+                    <span></span>
+                    <label for="nombre">[[#{usuario.nombre}]]</label>
+                </div>
+                <div class="usuario_data">
+                    <i class='bx bxs-id-card' ></i>
+                    <input type="text" name="apellido" required="false"/>
+                    <span></span>
+                    <label for="apellido">[[#{usuario.apellido}]]</label>
+                </div>
+                <div class="usuario_data">
+                    <i class='bx bxs-user'></i>
+                    <input type="text" name="username" required="true"/>
+                    <span></span>
+                    <label for="username">[[#{usuario.username}]]</label>
+                </div>
+                <div class="usuario_data">
+                    <i class='bx bxs-key'></i>
+                    <input type="password" name="password" required="true"/>
+                    <span></span>
+                    <label for="password">[[#{usuario.password}]]</label>
+                </div>
+                <input type="submit" value="Register" onClick="showNotificacion();">
+                <div class="registro">[[#{registro.ingreso}]]<a th:href="@{/login}">[[#{login.acceso}]]</a></div>
+            </form>
+        </section>
+    </body>
+</html>

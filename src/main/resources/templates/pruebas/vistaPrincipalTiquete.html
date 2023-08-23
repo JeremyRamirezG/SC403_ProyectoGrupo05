@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org">
+    <head>
+        <title>Testing</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <div>
+            <ul> 
+                <li><a th:href="@{/index}">Main Page</a></li>
+                <li><a th:href="@{/pruebas/listado}">[[#{pruebas.listado}]]</a></li>
+                <li><a th:href="@{/pruebas/enviarCorreo/}+${tiquetes.idTiquete}"+>[[#{correo.enviar}]]</a></li>
+            </ul> 
+        </div>
+        <div>
+            <h1>[[${tiquetes.titulo}]]</h1>
+            <div>Descripcion: [[${tiquetes.descripcion}]]</div>
+            <div>Estado: [[${tiquetes.estado}]]</div>
+            <div>Ingeniero: [[${usuario.nombre}]]</div>
+            <div>Cliente: [[${cliente.nombre}]]</div>
+        </div>
+    </body>
+</html>

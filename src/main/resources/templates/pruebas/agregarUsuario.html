@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <section th:fragment="agregarUsuario">
+            <div aria-hidden="true">
+                <form th:action="@{/pruebas/guardarUsuario}" th:object="${usuarios}"method="POST">
+                    <div>
+                        <div>
+                            <label for="nombre">[[#{usuario.nombre}]]</label>
+                            <input type="text" name="nombre" required="true"/>
+                        </div>
+                        <div>
+                            <label for="apellido">[[#{usuario.apellido}]]</label>
+                            <input type="text" name="apellido" required="false"/>
+                        </div>
+                        <div>
+                            <label for="username">[[#{usuario.username}]]</label>
+                            <input type="text" name="username" required="true"/>
+                        </div>
+                        <div>
+                          <label for="password">[[#{usuario.password}]]</label>
+                          <input type="password" name="password" required="true"/>
+                        </div>
+                    </div>
+                    <div>
+                        <button>Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>

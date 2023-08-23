@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{layout/plantilla :: head}"></head>
+    <body>
+        <section th:fragment="notificaciones_display">
+            <div class="titulo_container">
+              <h1>[[#{notificacion.dashboard}]]</h1>
+            </div>
+            <div id="messages"></div>
+        </section>
+    </body>
+</html>

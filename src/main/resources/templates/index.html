@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{layout/plantilla :: head}"></head>
+    <body>
+        <header th:replace="~{layout/plantilla :: header}"></header>
+        <section th:replace="~{layout/plantilla :: titulo}"></section>
+        <section th:replace="~{layout/plantilla :: listado_tiqutes}"></section>
+        <section th:replace="~{layout/plantilla :: crear_tiqutes}"></section>
+        <div th:replace="~{layout/plantilla :: notificaciones}"></div>
+    </body>
+</html>

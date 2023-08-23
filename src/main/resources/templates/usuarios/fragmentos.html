@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{layout/plantilla :: head}"></head>
+    <body>
+        <section th:fragment="titulo">
+            <div class="titulo_container">
+                <h1>[[#{usuario.listado}]]</h1>
+                <ul>
+                  <li><a href="#modal_crear">[[#{usuario.agregar}]]</a></li>
+                </ul>
+            </div>  
+        </section>
+        <section th:fragment="listado_usuarios">
+            <div class="container_tabla">
+                <table class="tabla_usuarios">
+                    <thead>
+                        <tr>
+                            <th>[[#{usuario.id}]]</th>
+                            <th>[[#{usuario.nombre}]]</th>
+                            <th>[[#{usuario.apellido}]]</th>
+                            <th>[[#{usuario.username}]]</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div th:if="${usuarios != null and !usuarios.empty}">
+                          <tr th:each="usuario, contador : ${usuarios}">
+                              <td>[[${usuario.idUsuario}]]</td>
+                              <td>[[${usuario.nombre}]]</td>
+                              <td>[[${usuario.apellido}]]</td>
+                              <td>[[${usuario.username}]]</td>
+                              <td><a th:href="@{/usuarios/eliminarUsuario/}+${usuario.idUsuario}">[[#{accion.eliminar}]]</a></td>
+                          </tr>
+                        </div>
+                        <div th:if="${usuarios == null or usuarios.empty}">
+                          <tr><td><i>[[#{usuario.vacio}]]</i></td></tr>
+                        </div>
+                    </tbody>
+                </table>
+            </div> 
+        </section>
+        <section th:fragment="modificar_usuario">
+            <div id="modal_crear" class="modal_form">
+                <div>
+                  <a href="#close" title="Close" class="close">X</a>
+                  <h2>[[#{accion.modificar}]]</h2>
+                  <form th:action="@{/usuarios/guardarUsuario}" th:object="${usuarios}"method="POST">
+                    <div>
+                        <div>
+                            <label for="nombre">[[#{usuario.nombre}]]</label>
+                            <input type="text" name="nombre" required="true"/>
+                        </div>
+                        <div>
+                            <label for="apellido">[[#{usuario.apellido}]]</label>
+                            <input type="text" name="apellido" required="false"/>
+                        </div>
+                        <div>
+                            <label for="username">[[#{usuario.username}]]</label>
+                            <input type="text" name="username" required="true"/>
+                        </div>
+                        <div>
+                          <label for="password">[[#{usuario.password}]]</label>
+                          <input type="password" name="password" required="true"/>
+                        </div>
+                    </div>
+                    <div>
+                        <button onClick="showNotificacion();">[[#{accion.guardar}]]</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

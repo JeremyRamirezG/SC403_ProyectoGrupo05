@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <section th:fragment="agregarDocumento">
+            <div aria-hidden="true">
+                <form th:action="@{/pruebas/guardarDocumentacion}" th:object="${documentacion}"method="POST">
+                    <input type="hidden" name="idDocumento" th:field="*{idDocumento}"/>
+                    <div>
+                        <div>
+                            <label for="titulo">[[#{documentacion.titulo}]]</label>
+                            <input type="text" name="titulo" required="true" th:field="*{titulo}"/>
+                        </div>
+                        <div>
+                            <label for="descripcion">[[#{documentacion.descripcion}]]</label>
+                            <input type="text" name="descripcion" required="false" th:field="*{descripcion}"/>
+                        </div>
+                        <div>
+                            <label for="contenido">[[#{documentacion.contenido}]]</label>
+                            <input type="text" name="contenido" required="true" th:field="*{contenido}"/>
+                        </div>
+                    </div>
+                    <div>
+                        <button>Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>

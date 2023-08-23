@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://wwww.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{layout/plantilla :: head}"></head>
+    <body>
+        <section th:fragment="tiquete">
+            <div class="titulo_tiquete_container">
+              <h1>[[${tiquetes.titulo}]]</h1>
+              <a th:href="@{/index}">[[#{tiquete.volver}]]</a>
+              <a sec:authorize="hasAnyRole('ROLE_ADM','ROLE_ING')" href="#modal_correo">[[#{correo.enviar}]]</a>
+              <a href="#modal_modificar">[[#{tiquete.modificar}]]</a>
+              <b>[[${tiquetes.idTiquete}]] | [[${tiquetes.estado}]]</b>
+              <div class="descripcion_container">
+                <h2>[[#{tiquete.descripcion}]]</h2>
+                <p>[[${tiquetes.descripcion}]]</p>
+              </div>
+              <div class="info_container">
+                <h2>[[#{tiquete.informacion}]]</h2>
+                <h3>[[#{tiquete.ingeniero}]]</h3>
+                <p>[[${usuario.username}]]</p>
+                <h3>[[#{tiquete.cliente}]]</h3>
+                <p>[[${cliente.username}]]</p>
+                <h3>[[#{tiquete.estado}]]</h3>
+                <p>[[${tiquetes.estado}]]</p>
+              </div>
+            </div>
+        </section>
+        <section th:fragment="modales">
+            <div id="modal_modificar" class="modal_form">
+            <div>
+              <a href="#close" title="Close" class="close">X</a>
+              <h2>[[#{accion.modificar}]]</h2>
+              <form th:action="@{/tiquetes/guardarTiquete}" th:object="${tiquetes}" method="POST" class="was-validated" enctype="multipart/form-data">
+                    <input type="hidden" name="idTiquete" th:field="*{idTiquete}"/>
+                    <input type="hidden" name="usuario.idUsuario" th:field="*{usuario.idUsuario}"/>
+                    <input type="hidden" name="cliente.idUsuario" th:field="*{cliente.idUsuario}"/>
+                    <div>
+                        <div>
+                            <label for="titulo">[[#{tiquete.titulo}]]</label>
+                            <input type="text" name="titulo" required="true" th:field="*{titulo}"/>
+                        </div>
+                        <div>
+                            <label for="descripcion">[[#{tiquete.descripcion}]]</label>
+                            <input type="text" name="descripcion" required="false" th:field="*{descripcion}"/>
+                        </div>
+                        <div>
+                            <label for="estado">[[#{tiquete.estado}]]</label>
+                            <select name="estado" class="form-select" required="true" th:field="*{estado}">
+                                <option th:value="Open" th:text="Open"></option>
+                                <option th:value="Close" th:text="Close"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <button onclick="sendPrivateMessage();showNotificacion();">[[#{accion.guardar}]]</button>
+                        <input type="hidden" id="privateText" th:value="#{notificacion.mensajei}+${tiquetes.idTiquete}+#{notificacion.mensajef}"/>
+                        <input type="hidden" id="to" th:field="${usrnotificacion.username}"/>
+                    </div>
+                </form>
+            </div>
+          </div>
+          <div id="modal_correo" class="modal_form">
+            <div>
+              <a href="#close" title="Close" class="close">X</a>
+              <h2>[[${tiquetes.titulo}]]</h2>
+              <p><b>[[#{correo.destinatario}]]</b> [[${destinatario}]]</p>
+              <p><b>[[#{correo.subject}]]</b> [[${subject}]]</p>
+                <form th:action="@{/tiquetes/enviarCorreo/}+${tiquetes.idTiquete}+@{/enviar}" method="POST">
+                    <div>
+                        <label for="contenido">[[#{correo.contenido}]]</label>
+                        <textarea name="contenido" required="true"></textarea>
+                    </div>
+                    <div>
+                        <button onclick="sendPrivateMessage();showNotificacion();">[[#{accion.enviar}]]</button>
+                        <input type="hidden" id="privateText" th:value="#{notificacion.mensajei}+${tiquetes.idTiquete}+#{notificacion.mensajef}"/>
+                        <input type="hidden" id="to" th:field="${usrnotificacion.username}"/>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </section>    
+    </body>
+</html>
