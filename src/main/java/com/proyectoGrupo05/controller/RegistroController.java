@@ -29,6 +29,6 @@ public class RegistroController {
     @PostMapping("/crearUsuario")
     public String crearUsuario(Usuarios usuarios, String rol)throws MessagingException {
         usuariosService.save(usuarios, true);
-        return "redirect:login";
+        return "redirect:/login";
     }
 }
